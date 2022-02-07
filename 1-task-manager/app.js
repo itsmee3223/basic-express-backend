@@ -4,6 +4,7 @@ const connectDB = require("./db/connect");
 require("dotenv").config();
 
 const apiRoutes = require("./routes/tasks.routes");
+const notFound = require("./middleware/not-found");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // routes
 app.use('/api/v1/tasks', apiRoutes);
+app.use(notFound)
 
 const port = 3000;
 connectDB(process.env.MONGO_URI)
