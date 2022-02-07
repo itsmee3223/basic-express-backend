@@ -2,6 +2,7 @@ const express = require("express");
 
 require("dotenv").config();
 // async error
+require('express-async-errors')
 
 // middleware import
 const notFoundMiddleware = require("./middleware/not-found");
