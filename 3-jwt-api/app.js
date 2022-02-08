@@ -4,9 +4,9 @@ require("express-async-errors");
 const express = require("express");
 const app = express();
 
+const JWTrouter = require("./routes/main");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
-const JWTrouter = require("./controllers/main");
 
 // middleware
 app.use(express.static("./public"));

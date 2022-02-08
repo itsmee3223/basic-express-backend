@@ -1,16 +1,11 @@
-const login = async (req, res) => {
-  res.send("Login horee");
-};
+const { Router } = require("express");
+const { login, dashboard } = require("../controllers/main");
 
-const dashboard = async (req, res) => {
-  const luckyNumber = Math.floor(Math.random() * 100);
-  res.status(200).json({
-    msg: "Heloo simican",
-    secret: `Her isi you lucky number ${luckyNumber}`,
-  });
-};
+const authMiddleware = require('../middleware/auth')
 
-module.exports = {
-  login,
-  dashboard,
-};
+const router = Router();
+
+router.route("/login").post(login);
+router.route("/dashboard").get(authMiddleware, dashboard);
+
+module.exports = router
