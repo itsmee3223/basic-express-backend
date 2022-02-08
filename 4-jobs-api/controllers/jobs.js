@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const { NotFoundError } = require("../errors");
+const { NotFoundError, BadRequestError } = require("../errors");
 const Job = require("../models/Job");
 
 const getAllJobs = async (req, res) => {
@@ -27,8 +27,48 @@ const createJob = async (req, res) => {
   const job = await Job.create(req.body);
   res.status(StatusCodes.OK).json({ job });
 };
-const updateJob = async (req, res) => {};
-const deleteJob = async (req, res) => {};
+const updateJob = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: jobsId },
+    body: { company, position },
+  } = req;
+  if (!company || !position) {
+    throw new BadRequestError("Company or Position fileds is empety");
+  }
+
+  const job = await Job.findOneAndUpdate(
+    {
+      _id: jobsId,
+      createdBy: userId,
+    },
+    req.body,
+    { new: true, runValidators: true }
+  );
+
+  if (!job) {
+    throw new NotFoundError(`Error there's no job with ${jobsId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ job });
+};
+const deleteJob = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: jobId },
+  } = req;
+
+  const job = await Job.findOneAndRemove({
+    _id: jobId,
+    createdBy: userId,
+  });
+
+  if (!job) {
+    throw new NotFoundError(`Error there's no job with ${jobId}`);
+  }
+
+  res.status(StatusCodes.OK).send();
+};
 
 module.exports = {
   getAllJobs,
