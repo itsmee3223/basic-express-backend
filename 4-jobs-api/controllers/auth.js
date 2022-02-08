@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError } = require("../errors");
 const User = require("../models/User");
