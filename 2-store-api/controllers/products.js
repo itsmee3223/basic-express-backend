@@ -33,6 +33,13 @@ const getAllProducts = async (req, res) => {
     result = result.select(fieldList);
   }
 
+  // limit the products and get by page
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+  result = result.skip(skip).limit(limit);
+
+  // final products to get
   const products = await result;
 
   res.status(200).json({
