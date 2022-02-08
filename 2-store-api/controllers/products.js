@@ -1,7 +1,7 @@
 const Product = require("../models/product");
 
 const getAllProducts = async (req, res) => {
-  const { featured, company, name, sort, fields } = req.query;
+  const { featured, company, name, sort, fields, numericFilters } = req.query;
   const objectQuery = {};
 
   // find by query in object
@@ -15,6 +15,31 @@ const getAllProducts = async (req, res) => {
 
   if (name) {
     objectQuery.name = { $regex: name, $options: "i" };
+  }
+
+  // numeric filering
+  if (numericFilters) {
+    const operatorMap = {
+      ">": "$gt",
+      ">=": "$gte",
+      "=": "$eq",
+      "<": "$lt",
+      "<=": "$lte",
+    };
+
+    const regEx = /\b(<|>|>=|=|<|<=)\b/g;
+    let filters = numericFilters.replace(
+      regEx,
+      (match) => `-${operatorMap[match]}-`
+    );
+
+    const options = ["rating", "price"];
+    filters = filters.split(",").forEach((item) => {
+      const [field, operator, value] = item.split("-");
+      if (options.includes(field)) {
+        objectQuery[field] = { [operator]: Number(value) };
+      }
+    });
   }
 
   let result = Product.find(objectQuery);
