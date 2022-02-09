@@ -3,7 +3,7 @@ const { BadRequestError, UnauthenticatedError } = require("../errors");
 const User = require("../models/User");
 
 const register = async (req, res) => {
-  // can use this or by mongoose
+  // can use this or by mongoose validation
   // if (!name || !email || !password) {
   //   throw new BadRequestError("Please provide name, email, password");
   // }
