@@ -7,4 +7,4 @@
 - Task Manager API: https://tasks-api-expressjs.herokuapp.com/
 - Store API: https://get-store-api.herokuapp.com/
 - JWT API: https://jwt-basics-api.herokuapp.com/
-- Jobs API: https://ramanda-jobs-api.herokuapp.com/api-docs/
+- Jobs API: https://crud-auth-jobs-api.herokuapp.com/
