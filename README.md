@@ -4,4 +4,6 @@
 - Repository : https://github.com/john-smilga/node-express-course
 
 # Deployed APP
-https://ramanda-jobs-api.herokuapp.com/api-docs/
+- Task Manager API: https://tasks-api-expressjs.herokuapp.com/
+- Store API: https://get-store-api.herokuapp.com/
+- Jobs API: https://ramanda-jobs-api.herokuapp.com/api-docs/
